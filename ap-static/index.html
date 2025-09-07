@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>HeroCare & OneView - Static Player Rebuild</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="description" content="Static slide player rebuilt wrapper for ActivePresenter export" />
+  <link rel="icon" type="image/png" href="../resources/res_10055.png" />
+  <!-- ActivePresenter runtime CSS -->
+  <link rel="stylesheet" type="text/css" href="../player/rlplayer.css" />
+  <!-- Our override styles -->
+  <link rel="stylesheet" type="text/css" href="css/overrides.css" />
+  <style>
+    html,body{height:100%;margin:0;padding:0;background:#0e1419;color:#e6edf3;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;}
+    body.loading #ap-wrapper{opacity:.15;filter:blur(2px);transition:opacity .35s,filter .35s}
+    #ap-wrapper{position:relative;height:100%;}
+    /* Minimal fallback preloader before AP one appears */
+    #bootstrap-preloader{position:fixed;inset:0;display:flex;flex-direction:column;gap:1rem;align-items:center;justify-content:center;background:#0e1419;z-index:9999;font-size:.9rem;letter-spacing:.5px;color:#9bb4c9}
+    #bootstrap-preloader .spinner{width:60px;height:60px;border:6px solid rgba(255,255,255,.15);border-top-color:#1d6fd8;border-radius:50%;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+  <!-- ActivePresenter runtime JS -->
+  <script src="../player/rlplayer.js"></script>
+  <script src="../player/rlplayer.lang.en-US.js"></script>
+</head>
+<body class="loading">
+  <div id="bootstrap-preloader">
+    <div class="spinner"></div>
+    <div>Preparando visor...</div>
+  </div>
+  <div id="ap-wrapper" class="ap-prez-wrapper">
+    <div id="StaticPlayerContainer" class="ap-prez-container" lang="en-US" dir="ltr"></div>
+  </div>
+  <script src="js/custom.js" type="module"></script>
+  <script>
+    // Lanzar inmediatamente el reproductor original apuntando al rlprez.js existente
+    (function(){
+      window.__AP_LAUNCH_TIME = performance.now();
+      AtomiAP.open("../rlprez.js","StaticPlayerContainer",{
+        playMode:"Practice",
+        preloader:{zIndex:10,diameter:64,density:9,range:1000,speed:1,color:'#1d6fd8',shape:'oval'},
+        // Se podrían añadir más opciones aquí si el runtime las soporta
+      });
+    })();
+  </script>
+</body>
+</html>
